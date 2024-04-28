@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', trans('backend.titles.faqs'))
+@section('title','FAQs')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('/backend/css/datepicker.min.css') }}">
 @endsection
@@ -45,7 +45,7 @@
                                     <div class="tab-pane fade @if($loop->first) active show @endif" id="{{ $lang->code }}"
                                          role="tabpanel" aria-labelledby="tab-{{ $lang->code }}">
                                         <div class="form-group row">
-                                            <label for="type:{{ $lang->code }}" class="col-form-label text-right col-lg-3 col-sm-12">
+                                            <label for="question:{{ $lang->code }}" class="col-form-label text-right col-lg-3 col-sm-12">
                                                 Question ({{ strtoupper($lang->code) }})
                                                 <span class="text-danger">*</span>
                                             </label>
@@ -55,7 +55,7 @@
                                                            class="form-control @if($errors->has("question:$lang->code")) is-invalid @endif"
                                                            name="question:{{ $lang->code }}"
                                                            value="{{ isset($faq) ? $faq->translate($lang->code)?->question : old('question:'.$lang->code) }}"
-                                                           placeholder="type">
+                                                           placeholder="question">
                                                     @if ($errors->has("question:$lang->code"))
                                                         <div class="invalid-feedback">{{ $errors->first("question:$lang->code") }}</div>
                                                     @endif
@@ -93,7 +93,7 @@
                                          <span class="switch switch-md switch-icon">
                                              <label>
                                                  <input type="checkbox" class="bool" name="status"
-                                                        value="{{ isset($package) ? $faq->status : old('status') }}"
+                                                        value="{{ isset($faq) ? $faq->status : old('status') }}"
                                                      {{ (isset($faq) ? old('status',$faq->status) : old('status',1) ) == 1 ? 'checked' : '' }}>
                                                  <span></span>
                                              </label>

@@ -19,5 +19,5 @@
 @section('scripts')
     <script src="{{asset('backend/js/sweetalert.min.js')}}"></script>
     <script src="{{asset('backend/js/datatables.bundle.js')}}"></script>
-    @include('backend.includes.plugins.datatable',['columns'=>['id','name','description','actions'], 'route'=>route('backend.categories.index')])
+    @include('backend.includes.plugins.datatable',['columns'=>['id','name','type','status','actions'], 'route'=>route('backend.categories.index')])
 @endsection

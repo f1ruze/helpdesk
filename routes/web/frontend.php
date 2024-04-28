@@ -3,7 +3,7 @@
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\TicketController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -25,9 +25,9 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/', [IndexController::class, 'index'])->name('dashboard');
 
 
-//contact
-Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
-Route::post('/contact-save/request', [ContactController::class, 'contactSendRequest'])->name('contactSendRequest');
+//ticket
+Route::get('/ticket', [TicketController::class, 'ticket'])->name('ticket');
+Route::post('/ticket-save/request', [TicketController::class, 'ticketSendRequest'])->name('ticketSendRequest');
 
 //about
 Route::get('/about', [AboutController::class, 'about'])->name('about');

@@ -49,7 +49,7 @@
                     charset: 'UTF-8',
                     bom: true,
                     exportOptions: {
-                        columns: [ 0, 2, 3,]
+                        columns: [ 0, 1,2,]
                     }
                 },
                 {

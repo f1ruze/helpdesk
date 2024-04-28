@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
             $admin =   Admin::create([
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
-                'password' => '88888888',
+                'password' => 'password',
                 'role_id' => 1
             ]);
 
@@ -21,13 +21,29 @@ class AdminSeeder extends Seeder
             $dev =  Admin::create([
                 'name' => 'Developer',
                 'email' => 'dev@dev.com',
-                'password' => '77777777',
+                'password' => 'password',
                 'role_id' => 2
             ]);
 
             $dev->assignRole(2);
 
+//    ----------------
+        $admin =   Admin::create([
+            'name' => 'Teacher',
+            'email' => 'user@teacher.com',
+            'password' => 'password',
+            'role_id' => 3
+        ]);
 
+        $admin->assignRole(3);
 
+        $admin =   Admin::create([
+            'name' => 'Student',
+            'email' => 'user@student.com',
+            'password' => 'password',
+            'role_id' => 3
+        ]);
+
+        $admin->assignRole(3);
     }
 }

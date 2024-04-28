@@ -4,7 +4,8 @@
             <tr>
                 <th>@lang('backend.labels.id')</th>
                 <th>@lang('backend.labels.name')</th>
-                <th>@lang('backend.labels.description')</th>
+                <th>Tipi</th>
+                <th>@lang('backend.labels.status')</th>
                 <th>@lang('backend.labels.actions')</th>
             </tr>
         </thead>

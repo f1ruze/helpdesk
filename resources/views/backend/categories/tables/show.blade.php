@@ -8,11 +8,11 @@
                 </tr>
                 <tr class="bg-gray-100">
                     <td class="table-row-title w-25">Name</td>
-                    <td class="table-center">{{ $category->name }}</td>
+                    <td class="table-center">{{ $category->translation->name }}</td>
                 </tr>
                 <tr class="bg-gray-100">
-                    <td class="table-row-title w-25">Description</td>
-                    <td class="table-center">{{ $category->description }}</td>
+                    <td class="table-row-title w-25">Type</td>
+                    <td class="table-center">{{ $category->translation->type }}</td>
                 </tr>
                 <tr class="bg-gray-100">
                     <td class="table-row-title w-25">

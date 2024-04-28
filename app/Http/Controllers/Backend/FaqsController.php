@@ -125,10 +125,13 @@ class FaqsController extends Controller
             ->editColumn('answer', function ($row) {
                 return Str::limit($row->translation->answer, $limit = 30, $end = '...');
             })
+            ->editColumn('status', function ($row) {
+                return  badge($row->status);
+            })
             ->editColumn('actions', function ($row) {
                 return $this->permissions($row->id);
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['status','actions'])
             ->skipPaging()
             ->setTotalRecords($count)
             ->setFilteredRecords($count)

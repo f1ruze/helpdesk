@@ -7,8 +7,10 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\DepartmentController;
 use App\Http\Controllers\Backend\DocumentsController;
 use App\Http\Controllers\Backend\DotEnvController;
+use App\Http\Controllers\Backend\FacultyController;
 use App\Http\Controllers\Backend\FaqsController;
 use App\Http\Controllers\Backend\FileManagerController;
 use App\Http\Controllers\Backend\LanguageController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\TicketController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\WriterController;
 use App\Http\Controllers\Backend\WritingController;
@@ -62,12 +65,19 @@ Route::group(['middleware' => ['auth:admin']], function () {
     //categories
     Route::resource('/categories', CategoryController::class);
 
+    //departments
+    Route::resource('/departments', DepartmentController::class);
+
+
+    //faculty
+    Route::resource('/faculties', FacultyController::class);
+
 
     //faqs
     Route::resource('/faqs', FaqsController::class);
 
-    //contacts
-    Route::resource('/contacts', ContactController::class);
+    //tickets
+    Route::resource('/tickets', TicketController::class);
 
 
     //orders

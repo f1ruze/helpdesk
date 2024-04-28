@@ -3,28 +3,33 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Frontend\FormContactRequest;
+use App\Http\Requests\Frontend\FormTicketRequest;
 use App\Mail\SendContactMail;
-use App\Models\ContactRequest;
-use Illuminate\Http\Request;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class ContactController extends Controller
+class TicketController extends Controller
 {
-    public function contact()
+    public function ticket()
     {
-        return view('frontend.pages.contact.index');
+        return view('frontend.index');
     }
 
-    public function contactSendRequest(FormContactRequest $request)
+    public function ticketSendRequest(FormTicketRequest $request)
     {
         $data = $request->validated();
         try {
-            ContactRequest::create([
-                'fullName'=>$data['fullName'],
+            Ticket::create([
+                'faculty'=>$data['faculty'],
+                'type'=>$data['type'],
+                'category'=>$data['category'],
+                'department'=>$data['department'],
+                'teacher'=>$data['teacher'],
+                'student'=>$data['student'],
                 'email'=>$data['email'],
-                'subject'=>$data['subject'],
+                'priority'=>$data['priority'],
+                'message'=>$data['message'],
             ]);
 
             $fromAddress =  config('mail.main_email');

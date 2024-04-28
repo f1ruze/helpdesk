@@ -26,8 +26,7 @@ class FormCategoryRequest extends FormRequest
         $return[] = [
             'image' => 'required',
             'status' => ['nullable'],
-            'slug' => ['required'],
-            'parent_id' => ['nullable'],
+
         ];
         $active_langs = Cache::rememberForever('active_langs', function () {
             return Language::active()->get();
@@ -35,12 +34,7 @@ class FormCategoryRequest extends FormRequest
         foreach ($active_langs as $lang){
             $return[] = [
                 'name:' . $lang['code'] => ['required'],
-                'description:' . $lang['code'] => ['required'],
-                'meta_title:' . $lang['code'] => ['required'],
-                'meta_description:' . $lang['code'] => ['required'],
-                'meta_keywords:' . $lang['code'] => ['required'],
-                'title_first:' . $lang['code'] => ['nullable'],
-                'title_second:' . $lang['code'] => ['nullable'],
+                'type:' . $lang['code'] => ['required'],
             ];
         }
 

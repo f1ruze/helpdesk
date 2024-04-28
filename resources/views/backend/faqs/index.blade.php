@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', trans('backend.titles.faqs'))
+@section('title', 'FAQs')
 @section('styles')
     <link rel="stylesheet" href="{{asset('backend/css/sweetalert.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/css/datatables.bundle.css')}}">
@@ -19,5 +19,5 @@
 @section('scripts')
     <script src="{{asset('backend/js/sweetalert.min.js')}}"></script>
     <script src="{{asset('backend/js/datatables.bundle.js')}}"></script>
-    @include('backend.includes.plugins.datatable',['columns'=>['id','question','answer','actions'], 'route'=>route('backend.faqs.index')])
+    @include('backend.includes.plugins.datatable',['columns'=>['id','question','answer','status','actions'], 'route'=>route('backend.faqs.index')])
 @endsection

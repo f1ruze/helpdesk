@@ -6,12 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\FormCategoryRequest;
 use App\Models\Category;
 use App\Models\Language;
-use App\Services\UploadMediaService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,51 +31,31 @@ class CategoryController extends Controller
         abort_if(Gate::denies('categories create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $edit = false;
         $langs = Language::active()->get();
-        $categories = Category::get();
-        return view('backend.categories.form', compact('edit', 'langs','categories'));
+        return view('backend.categories.form', compact('edit', 'langs'));
     }
 
-    public function store(FormCategoryRequest $request, UploadMediaService $mediaService)
+    public function store(FormCategoryRequest $request)
     {
         abort_if(Gate::denies('categories create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = $request->validated();
         DB::beginTransaction();
         try {
             $category = Category::create([
-                'code' => Str::slug($data['name:' . locale()]),
                 'status' => $data['status'],
-                'slug' => $data['slug'],
-                'parent_id' => $data['parent_id'],
             ]);
             foreach (Cache::get('active_langs') as $lang) {
                 $category->translations()->create([
                     'locale' => $lang->code,
+                    'type' => $data['type:' . $lang->code],
                     'name' => $data['name:' . $lang->code],
-                    'description' => $data['description:' . $lang->code],
-                    'meta_title' => $data['meta_title:' . $lang->code],
-                    'meta_description' => $data['meta_description:' . $lang->code],
-                    'meta_keywords' => $data['meta_keywords:' . $lang->code],
-                    'title_first' => $data['title_first:' . $lang->code],
-                    'title_second' => $data['title_second:' . $lang->code],
                 ]);
             }
-
-            if ($request->hasFile('image'))
-                $mediaService->upload('category', 'image', $category->id, '', false, $request);
-
-            Cache::delete('categories');
-            Cache::delete('video_news');
-            Cache::delete('fresh_news');
-            Cache::delete('top_10_news');
-            Cache::delete('main_news');
-
-            Cache::delete('categories_menu');
             DB::commit();
             return redirect(route('backend.categories.index'))->withSuccess(trans('backend.messages.success.create'));
         } catch (\Exception $e) {
             DB::rollback();
             Log::channel('frontend')->error($e->getMessage());
-            return redirect()->back()->withWarning(trans('backend.messages.error'));
+            return redirect()->back()->withWarning(trans('backend.messages.error.create'));
         }
     }
 
@@ -92,11 +70,10 @@ class CategoryController extends Controller
         abort_if(Gate::denies('categories edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $edit = true;
         $langs = Language::active()->get();
-        $categories = Category::get();
-        return view('backend.categories.form', compact('category', 'edit', 'langs','categories'));
+        return view('backend.categories.form', compact('category', 'edit', 'langs'));
     }
 
-    public function update(FormCategoryRequest $request, Category $category, UploadMediaService $mediaService)
+    public function update(FormCategoryRequest $request,Category $category)
     {
         abort_if(Gate::denies('categories edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data = $request->validated();
@@ -104,38 +81,23 @@ class CategoryController extends Controller
         try {
             $category->update([
                 'status' => $data['status'],
-                'slug' => $data['slug'],
-                'parent_id' => $data['parent_id'],
             ]);
             foreach (Cache::get('active_langs') as $lang) {
                 $category->translations()->updateOrcreate(
                     ['locale' => $lang->code],
                     [
+                        'type' => $data['type:' . $lang->code],
                         'name' => $data['name:' . $lang->code],
-                        'description' => $data['description:' . $lang->code],
-                        'meta_title' => $data['meta_title:' . $lang->code],
-                        'meta_description' => $data['meta_description:' . $lang->code],
-                        'meta_keywords' => $data['meta_keywords:' . $lang->code],
-                        'title_first' => $data['title_first:' . $lang->code],
-                        'title_second' => $data['title_second:' . $lang->code],
                     ]
                 );
             }
-            if ($request->hasFile('image'))
-                $mediaService->upload('category', 'image', $category->id, '', false, $request);
 
-            Cache::delete('categories_menu');
-            Cache::delete('categories');
-            Cache::delete('video_news');
-            Cache::delete('fresh_news');
-            Cache::delete('top_10_news');
-            Cache::delete('main_news');
             DB::commit();
             return redirect(route('backend.categories.index'))->withSuccess(trans('backend.messages.success.update'));
         } catch (\Exception $e) {
             DB::rollback();
             Log::channel('frontend')->error($e->getMessage());
-            return redirect()->back()->withWarning(trans('backend.messages.error'));
+            return redirect()->back()->withWarning(trans('backend.messages.error.update'));
         }
     }
 
@@ -144,12 +106,6 @@ class CategoryController extends Controller
     {
         abort_if(Gate::denies('categories delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $category->delete();
-        Cache::delete('categories_menu');
-        Cache::delete('categories');
-        Cache::delete('video_news');
-        Cache::delete('fresh_news');
-        Cache::delete('top_10_news');
-        Cache::delete('main_news');
         return response(['status' => 1]);
     }
 
@@ -157,16 +113,19 @@ class CategoryController extends Controller
     {
         return datatables()
             ->of($data)
-            ->editColumn('name', function ($row) {
-                return $row->translate(locale())->name;
+            ->editColumn('status', function ($row) {
+                return  badge($row->status);
             })
-            ->editColumn('description', function ($row) {
-                return Str::limit($row->translate(locale())?->description,30);
+            ->editColumn('type', function ($row) {
+                return  $row->translation->type;
+            })
+            ->editColumn('name', function ($row) {
+                return  $row->translation->name;
             })
             ->editColumn('actions', function ($row) {
                 return $this->permissions($row->id);
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['type','name','status','actions'])
             ->skipPaging()
             ->setTotalRecords($count)
             ->setFilteredRecords($count)

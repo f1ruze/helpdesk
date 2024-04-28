@@ -20,8 +20,11 @@ class DatabaseSeeder extends Seeder
                 PermissionsTableSeeder::class,
                 SettingSeeder::class,
 
-//                CategorySeeder::class,
-//                FaqsSeeder::class,
+                FaqsSeeder::class,
+                FacultySeeder::class,
+                DepartmentSeeder::class,
+                CategorySeeder::class,
+
             ]
         );
     }

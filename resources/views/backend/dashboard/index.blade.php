@@ -5,9 +5,37 @@
         <div class="d-flex flex-column-fluid">
             <div class="container">
                 <div class="row">
+                    @can('tickets index')
+                        <div class="col-lg-3 ">
+                            <a href="{{route('backend.tickets.index')}}"
+                               class="card card-custom bg-primary bg-hover-state-primary card-stretch gutter-b">
+                                <div class="card-body">
+                                <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                                   <i class="text-white fa fa-2x fa-list-alt"></i>
+                                </span>
+                                    <div
+                                        class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5"></div>
+                                    <div class="font-weight-bold text-inverse-primary font-size-lg">Ticket</div>
+                                </div>
+                            </a>
+                        </div>
+                    @endcan
+                    @can('faqs index')
+                        <div class="col-lg-3 ">
+                            <a href="{{route('backend.faqs.index')}}"
+                               class="card card-custom bg-success bg-hover-state-success card-stretch gutter-b">
+                                <div class="card-body">
+                                <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                                   <i class="text-white fa fa-2x fa-list-alt"></i>
+                                </span>
+                                    <div
+                                        class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5"></div>
+                                    <div class="font-weight-bold text-inverse-primary font-size-lg">FAQs</div>
+                                </div>
+                            </a>
+                        </div>
+                    @endcan
                     <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack mb-11">
-
-
 
                         <!--begin::Page title-->
                         <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">

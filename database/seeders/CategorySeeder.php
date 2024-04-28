@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use App\Models\CategoryTranslation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class CategorySeeder extends Seeder
 {
@@ -16,103 +15,157 @@ class CategorySeeder extends Seeder
     {
         \DB::table('categories')->delete();
 
-        $categories = [
-            [
-                'id' => 1,
-                'name' => 'Xəbər',
-                'code' => 'news',
-                'slug' => 'xəbər',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-11-13 13:09:42',
-            ],
-            [
-                'id' => 2,
-                'name' => 'Analitika',
-                'code' => 'analytics',
-                'slug' => 'analitika',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-04-15 12:08:18',
-            ],
-            [
-                'id' => 4,
-                'name' => 'Reportaj',
-                'code' => 'report',
-                'slug' => 'reportaj',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-11-13 13:17:57',
-            ],
-            [
-                'id' => 5,
-                'name' => 'Araşdırma',
-                'code' => 'research',
-                'slug' => 'araşdırma',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-11-13 13:22:23',
-            ],
-            [
-                'id' => 6,
-                'name' => 'Müsahibə',
-                'code' => 'interview',
-                'slug' => 'müsahibə',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-11-13 13:09:42',
-            ],
-            [
-                'id' => 7,
-                'name' => 'İcmal',
-                'code' => 'overview',
-                'slug' => 'icmal',
-                'status' => '1',
-                'created_at' => '2022-04-15 12:08:18',
-                'updated_at' => '2022-11-13 13:09:42',
-            ]
-        ];
-
-        foreach ($categories as $category) {
-            $cat = Category::create([
-                'id' => $category['id'],
-                'code' => $category['code'],
-                'slug' => $category['slug'],
-                'status' => $category['status']
+        $model = Category::create([
+            'id' => 1,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name' => 'Printer Problemləri'
             ]);
-
-            CategoryTranslation::create(
-                [
-                    'category_id' => $cat->id,
-                    'name' => $category['name'],
-                    'description' => $category['name'],
-                    'meta_title' => $category['name'],
-                    'meta_description' => $category['name'],
-                    'meta_keywords' => $category['name'],
-                    'locale' => 'az'
-                ]);
-
-            CategoryTranslation::create(
-                [
-                    'category_id' => $cat->id,
-                    'name' => $category['name'],
-                    'description' => $category['name'],
-                    'meta_title' => $category['name'],
-                    'meta_description' => $category['name'],
-                    'meta_keywords' => $category['name'],
-                    'locale' => 'en'
-                ]);
-
-            CategoryTranslation::create(
-                [
-                    'category_id' => $cat->id,
-                    'name' => $category['name'],
-                    'description' => $category['name'],
-                    'meta_title' => $category['name'],
-                    'meta_description' => $category['name'],
-                    'meta_keywords' => $category['name'],
-                    'locale' => 'ru'
-                ]);
         }
+
+        $model = Category::create([
+            'id' => 2,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name'=>'Kompüter Qəzaları'
+            ]);
+        }
+
+        $model = Category::create([
+            'id' => 3,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name' =>'Şəbəkə Problemləri'
+            ]);
+        }
+
+
+        $model = Category::create([
+            'id' => 4,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name' =>'Saxlama Problemləri'
+            ]);
+        }
+
+        $model = Category::create([
+            'id' => 5,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name'=>'Fiziki zərər'
+            ]);
+        }
+
+
+
+        $model = Category::create([
+            'id' => 6,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'hardware',
+                'name' => 'Avadanlıq Təkmilləşdirmələri',
+            ]);
+        }
+
+        $model = Category::create([
+            'id' => 7,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Quraşdırma Problemləri',
+            ]);
+        }
+
+        $model = Category::create([
+            'id' => 8,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Proqram Qəzaları',
+            ]);
+        }
+
+
+
+        $model = Category::create([
+            'id' => 9,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Performans Məsələləri',
+            ]);
+        }
+
+
+        $model = Category::create([
+            'id' => 10,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Uyğunluq Problemləri',
+            ]);
+        }
+
+        $model = Category::create([
+            'id' => 11,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Təhlükəsizlik Problemləri',
+            ]);
+        }
+
+
+        $model = Category::create([
+            'id' => 12,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Giriş/Qeydiyyat Problemləri',
+            ]);
+        }
+
+
+        $model = Category::create([
+            'id' => 13,
+        ]);
+        foreach (Cache::get('active_langs') as $lang) {
+            $model->translations()->create([
+                'locale' => $lang->code,
+                'type' => 'software',
+                'name' => 'Konfiqurasiya Problemləri',
+            ]);
+        }
+
+
     }
 }

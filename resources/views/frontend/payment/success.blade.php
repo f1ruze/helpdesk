@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     <main>
-        @include('frontend.includes.nav')
         <section class="intro">
             <div class="container">
                 <div class="intro_box">

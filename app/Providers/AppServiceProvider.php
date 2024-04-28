@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Slider;
+use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Writer;
 use App\Models\Writing;
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'user' => User::class,
             'slider' => Slider::class,
+            'ticket' => Ticket::class,
         ]);
     }
 }

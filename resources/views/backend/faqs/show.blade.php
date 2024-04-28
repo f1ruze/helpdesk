@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', trans('backend.titles.faqs'))
+@section('title', 'FAQs')
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="d-flex flex-column-fluid">
